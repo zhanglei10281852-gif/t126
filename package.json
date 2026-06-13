@@ -1,0 +1,26 @@
+{
+  "name": "ancient-tree-admin",
+  "version": "1.0.0",
+  "private": true,
+  "description": "古树名木保护管理平台 - 后端 API 基座（Node + Express + MySQL）",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "node src/server.js",
+    "init-db": "node src/init.js",
+    "test": "jest --runInBand --config jest.config.js"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "jsonwebtoken": "^9.0.2",
+    "mysql2": "^3.11.3"
+  },
+  "devDependencies": {
+    "cross-env": "^7.0.3",
+    "jest": "^29.7.0",
+    "supertest": "^7.0.0"
+  }
+}

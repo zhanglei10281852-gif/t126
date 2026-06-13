@@ -1,0 +1,49 @@
+services:
+  db:
+    image: mysql:8.0
+    container_name: ancient-tree-db
+    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    environment:
+      MYSQL_ROOT_PASSWORD: tree_root_pw
+      MYSQL_DATABASE: ancient_tree
+      TZ: Asia/Shanghai
+    ports:
+      - "3309:3306"
+    volumes:
+      - ancient_tree_data:/var/lib/mysql
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "mysqladmin",
+          "ping",
+          "-h",
+          "127.0.0.1",
+          "-uroot",
+          "-ptree_root_pw",
+        ]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  api:
+    build: .
+    container_name: ancient-tree-api
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      PORT: 7763
+      DB_HOST: db
+      DB_PORT: 3306
+      DB_USER: root
+      DB_PASSWORD: tree_root_pw
+      DB_NAME: ancient_tree
+      JWT_SECRET: ancient-tree-prod-secret
+      ADMIN_USERNAME: admin
+      ADMIN_PASSWORD: admin123
+    ports:
+      - "7763:7763"
+
+volumes:
+  ancient_tree_data:
